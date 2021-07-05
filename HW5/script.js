@@ -57,6 +57,7 @@ class Basket {
         for (let item of items) {
             this.items.push(item)
         }
+        window.addEventListener('DOMContentLoaded', (event)=> this.renderCart())
     }
 
     countBasketPrice() {
@@ -83,6 +84,8 @@ class Basket {
     }
 
 }
+
+const b = new Basket(new Product('2', 122, 3), new Product('1', 113, 1));
 
 //Задание 3
 function generateCatalog() {
@@ -117,8 +120,11 @@ function renderCatalog(data) {
         p.innerText = data[i].description;
         div.appendChild(p);
     }
+
 }
 
 function showCatalog() {
-    renderCatalog(generateCatalog())
+    window.addEventListener('DOMContentLoaded', (event) => renderCatalog(generateCatalog()));
 }
+
+showCatalog()
