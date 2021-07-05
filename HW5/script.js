@@ -33,7 +33,7 @@ function chessBoardCreator() {
 
 // Задание 2
 class Product {
-    constructor(name, price, quantity=0) {
+    constructor(name, price, quantity = 0) {
         this.price = price;
         this.name = name;
         this.quantity = quantity;
@@ -67,38 +67,21 @@ class Basket {
         return this.items.length
     }
 
-}
-
-
-// empty true, если корзина пуста
-function createTestCart(empty) {
-    if (!empty) {
-        const tp1 = new Product('1', 123, 2);
-        const tp2 = new Product('2', 122, 4);
-        const testBasket = new Basket(tp1, tp2)
-        return testBasket
+    renderCart() {
+        let parent = document.getElementsByClassName('cart')[0];
+        let status = this.countItems();
+        let statusP = document.createElement('p');
+        parent.appendChild(statusP);
+        let text;
+        if (status > 0) {
+            text = `В корзине: ${status} товаров на сумму ${this.countBasketPrice()} рублей`;
+            parent.style.backgroundColor = "#7FFF94";
+        } else {
+            text = 'Корзина пуста';
+        }
+        statusP.innerText = text;
     }
-    return new Basket()
 
-}
-
-function renderCart(cart) {
-    let parent = document.getElementsByClassName('cart')[0];
-    let status = cart.countItems()
-    let statusP = document.createElement('p');
-    parent.appendChild(statusP);
-    let text;
-    if (status > 0) {
-        text = `В корзине: ${status} товаров на сумму ${cart.countBasketPrice()} рублей`;
-        parent.style.backgroundColor = "#7FFF94";
-    } else {
-        text = 'Корзина пуста';
-    }
-    statusP.innerText = text;
-}
-
-function showCart() {
-    renderCart(createTestCart(false))
 }
 
 //Задание 3
@@ -123,7 +106,7 @@ function renderCatalog(data) {
     const h2 = document.createElement('h2');
     h2.innerText = 'Каталог';
     parent.appendChild(h2);
-    for(let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         const div = document.createElement('div');
         div.className = 'item-card';
         parent.appendChild(div);

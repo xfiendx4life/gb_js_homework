@@ -9,7 +9,8 @@
     <title>Document</title>
     <script>
         window.addEventListener('DOMContentLoaded', (event) => chessBoardCreator());
-        window.addEventListener('DOMContentLoaded', (event) => showCart());
+        window.addEventListener('DOMContentLoaded', (event)=>
+            (new Basket(new Product('2', 122, 3), new Product('1', 113, 1))).renderCart())
         window.addEventListener('DOMContentLoaded', (event) => showCatalog());
     </script>
 </head>
