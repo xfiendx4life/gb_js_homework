@@ -222,7 +222,7 @@ const wall = {
   },
 
   generateWallBody() {
-    this.resetWall;
+    this.resetWall();
     this.setRandomLength();
     this.setDirection();
     let x = parseInt(Math.random() * 21);
@@ -236,6 +236,7 @@ const wall = {
         this.setWallCoordinates(++dirCoord, this.getLastWallCoordinate().y);
       }
     }
+    this.len = this.body.length;
   },
 
 }
