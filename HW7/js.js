@@ -372,8 +372,8 @@ const game = {
     if (this.isOnFood()) {
       this.renderScore(this.addToScore());
       this.snake.growUp();
+      this.wall.generateWallBody(); 
       this.food.setCoordinates(this.getRandomFreeCoordinates());
-
       if (this.isGameWon()) this.finish();
     }
 
