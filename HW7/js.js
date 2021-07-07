@@ -85,7 +85,7 @@ const map = {
     }
   },
 
-  render(snakePointsArray, foodPoint) {
+  render(snakePointsArray, foodPoint, wallPointsArray) {
     for (const cell of this.usedCells) {
       cell.className = 'cell';
     }
@@ -101,6 +101,12 @@ const map = {
     const foodCell = this.cells[`x${foodPoint.x}_y${foodPoint.y}`];
     foodCell.classList.add('food');
     this.usedCells.push(foodCell);
+
+    wallPointsArray.forEach((point, index) => {
+      const wallCell = this.cells[`x${point.x}_y${point.y}`];
+      wallCell.classList.add('wall');
+      this.usedCells.push(wallCell);
+    });
   },
 };
 
@@ -197,12 +203,17 @@ const wall = {
   len: null,
   isHoriz: true,
   body: [],
+  config,
 
   setWallCoordinates(x, y) {
     this.body.push({
       x,
       y
     });
+  },
+
+  getBody() {
+    return this.body;
   },
 
   setRandomLength() {
@@ -226,10 +237,11 @@ const wall = {
     this.setRandomLength();
     this.setDirection();
     let x = parseInt(Math.random() * 21);
+    x === Math.floor(this.config.getColsCount / 2) ? x++ : x;
     let y = parseInt(Math.random() * 21);
     this.setWallCoordinates(x, y);
     let dirCoord = this.isHoriz ? this.getLastWallCoordinate().y : this.getLastWallCoordinate().x;
-    while (dirCoord < 21 && this.body.length < this.len) {
+    while (dirCoord < 20 && this.body.length < this.len) {
       if (this.isHoriz) {
         this.setWallCoordinates(this.getLastWallCoordinate().x, ++dirCoord);
       } else {
@@ -293,6 +305,7 @@ const game = {
 
   reset() {
     this.stop();
+    this.wall.generateWallBody();
     this.snake.init(this.getStartSnakeBody(), 'up');
     this.food.setCoordinates(this.getRandomFreeCoordinates());
     this.renderScore(this.resetScore());
@@ -307,7 +320,7 @@ const game = {
   },
 
   getRandomFreeCoordinates() {
-    const exclude = [this.food.getCoordinates(), ...this.snake.getBody()];
+    const exclude = [this.food.getCoordinates(), ...this.snake.getBody(), ...this.wall.getBody()];
 
     while (true) {
       const rndPoint = {
@@ -448,7 +461,7 @@ const game = {
   },
 
   render() {
-    this.map.render(this.snake.getBody(), this.food.getCoordinates());
+    this.map.render(this.snake.getBody(), this.food.getCoordinates(), this.wall.getBody());
   },
 
 };
