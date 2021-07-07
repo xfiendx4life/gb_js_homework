@@ -151,15 +151,23 @@ const snake = {
   getNextStepHeadPoint() {
     const firstPoint = this.getBody()[0];
 
-    switch(this.direction) {
+    switch (this.direction) {
       case 'up':
-        return {x: firstPoint.x, y: firstPoint.y - 1};
+        return {
+          x: firstPoint.x, y: firstPoint.y - 1
+        };
       case 'right':
-        return {x: firstPoint.x + 1, y: firstPoint.y};
+        return {
+          x: firstPoint.x + 1, y: firstPoint.y
+        };
       case 'down':
-        return {x: firstPoint.x, y: firstPoint.y + 1};
+        return {
+          x: firstPoint.x, y: firstPoint.y + 1
+        };
       case 'left':
-        return {x: firstPoint.x - 1, y: firstPoint.y};
+        return {
+          x: firstPoint.x - 1, y: firstPoint.y
+        };
     }
   },
 };
@@ -184,6 +192,53 @@ const food = {
     return this.x === point.x && this.y === point.y;
   },
 };
+
+const wall = {
+  len: null,
+  isHoriz: true,
+  body: [],
+
+  setWallCoordinates(x, y) {
+    this.body.push({
+      x,
+      y
+    });
+  },
+
+  setRandomLength() {
+    this.len = parseInt((Math.random() + 1) * 11);
+  },
+
+  setDirection() {
+    this.isHoriz = Math.random() < 0.5;
+  },
+
+  getLastWallCoordinate() {
+    return this.body[this.body.length - 1];
+  },
+
+  resetWall() {
+    this.body = [];
+  },
+
+  generateWallBody() {
+    this.resetWall;
+    this.setRandomLength();
+    this.setDirection();
+    let x = parseInt(Math.random() * 21);
+    let y = parseInt(Math.random() * 21);
+    this.setWallCoordinates(x, y);
+    let dirCoord = this.isHoriz ? this.getLastWallCoordinate().y : this.getLastWallCoordinate().x;
+    while (dirCoord < 21 && this.body.length < this.len) {
+      if (this.isHoriz) {
+        this.setWallCoordinates(this.getLastWallCoordinate().x, ++dirCoord);
+      } else {
+        this.setWallCoordinates(++dirCoord, this.getLastWallCoordinate().y);
+      }
+    }
+  },
+
+}
 
 const status = {
   condition: null,
@@ -216,7 +271,8 @@ const game = {
   food,
   status,
   tickInterval: null,
-  score:0,
+  score: 0,
+  wall,
 
   init(userSettings = {}) {
     this.config.init(userSettings);
@@ -243,12 +299,10 @@ const game = {
   },
 
   getStartSnakeBody() {
-    return [
-      {
-        x: Math.floor(this.config.getColsCount() / 2),
-        y: Math.floor(this.config.getRowsCount() / 2),
-      }
-    ];
+    return [{
+      x: Math.floor(this.config.getColsCount() / 2),
+      y: Math.floor(this.config.getRowsCount() / 2),
+    }];
   },
 
   getRandomFreeCoordinates() {
@@ -287,8 +341,9 @@ const game = {
     playButton.textContent = text;
 
     isDisabled
-        ? playButton.classList.add('disabled')
-        : playButton.classList.remove('disabled');
+      ?
+      playButton.classList.add('disabled') :
+      playButton.classList.remove('disabled');
   },
 
   tickHandler() {
@@ -326,10 +381,10 @@ const game = {
   canMakeStep() {
     const nextHeadPoint = this.snake.getNextStepHeadPoint();
     return !this.snake.isOnPoint(nextHeadPoint) &&
-        nextHeadPoint.x < this.config.getColsCount() &&
-        nextHeadPoint.y < this.config.getRowsCount() &&
-        nextHeadPoint.x >= 0 &&
-        nextHeadPoint.y >= 0;
+      nextHeadPoint.x < this.config.getColsCount() &&
+      nextHeadPoint.y < this.config.getRowsCount() &&
+      nextHeadPoint.x >= 0 &&
+      nextHeadPoint.y >= 0;
   },
 
   isGameWon() {
@@ -386,9 +441,9 @@ const game = {
     const lastStepDirection = this.snake.getLastStepDirection();
 
     return direction === 'up' && lastStepDirection !== 'down' ||
-        direction === 'right' && lastStepDirection !== 'left' ||
-        direction === 'down' && lastStepDirection !== 'up' ||
-        direction === 'left' && lastStepDirection !== 'right';
+      direction === 'right' && lastStepDirection !== 'left' ||
+      direction === 'down' && lastStepDirection !== 'up' ||
+      direction === 'left' && lastStepDirection !== 'right';
   },
 
   render() {
@@ -397,4 +452,6 @@ const game = {
 
 };
 
-game.init({speed: 5});
+game.init({
+  speed: 5
+});

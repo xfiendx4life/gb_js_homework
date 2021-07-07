@@ -55,3 +55,7 @@ td.cell{
     margin: 0 auto;
     margin-top: 20px;
 }
+
+.wall {
+    background-color: #000;
+}
