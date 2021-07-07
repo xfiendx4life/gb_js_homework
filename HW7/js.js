@@ -216,6 +216,7 @@ const game = {
   food,
   status,
   tickInterval: null,
+  score:0,
 
   init(userSettings = {}) {
     this.config.init(userSettings);
@@ -237,6 +238,7 @@ const game = {
     this.stop();
     this.snake.init(this.getStartSnakeBody(), 'up');
     this.food.setCoordinates(this.getRandomFreeCoordinates());
+    this.renderScore(this.resetScore());
     this.render();
   },
 
@@ -292,6 +294,7 @@ const game = {
   tickHandler() {
     if (!this.canMakeStep()) return this.finish();
     if (this.isOnFood()) {
+      this.renderScore(this.addToScore());
       this.snake.growUp();
       this.food.setCoordinates(this.getRandomFreeCoordinates());
 
@@ -300,6 +303,20 @@ const game = {
 
     this.snake.makeStep();
     this.render();
+  },
+
+  addToScore() {
+    return ++this.score;
+  },
+
+  resetScore() {
+    this.score = 0;
+    return this.score;
+  },
+
+  renderScore(score) {
+    let count = document.querySelector('.score-count');
+    count.innerHTML = score;
   },
 
   isOnFood() {
