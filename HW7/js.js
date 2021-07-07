@@ -160,19 +160,19 @@ const snake = {
     switch (this.direction) {
       case 'up':
         return {
-          x: firstPoint.x, y: firstPoint.y - 1
+          x: firstPoint.x, y: (firstPoint.y - 1 + settings.rowsCount) % settings.rowsCount
         };
       case 'right':
         return {
-          x: firstPoint.x + 1, y: firstPoint.y
+          x: (firstPoint.x + 1) % settings.colsCount , y: firstPoint.y
         };
       case 'down':
         return {
-          x: firstPoint.x, y: firstPoint.y + 1
+          x: firstPoint.x, y: (firstPoint.y + 1)  % settings.rowsCount
         };
       case 'left':
         return {
-          x: firstPoint.x - 1, y: firstPoint.y
+          x: (firstPoint.x - 1 + settings.colsCount) % settings.colsCount, y: firstPoint.y
         };
     }
   },
