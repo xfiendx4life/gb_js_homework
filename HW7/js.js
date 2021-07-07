@@ -203,7 +203,7 @@ const wall = {
   len: null,
   isHoriz: true,
   body: [],
-  config,
+  settings,
 
   setWallCoordinates(x, y) {
     this.body.push({
@@ -232,14 +232,14 @@ const wall = {
     this.body = [];
   },
 
-  generateWallBody() {
+  generateWallBody(snakeStep = {x: parseInt(settings.colsCount / 2), y: parseInt(settings.rowsCount / 2)}) {
     this.resetWall();
     this.setRandomLength();
     this.setDirection();
     let x = parseInt(Math.random() * 21);
-    x === Math.floor(this.config.getColsCount / 2) ? x++ : x;
+    x === Math.floor(snakeStep.x) ? x = (x + 10) % settings.colsCount : x;
     let y = parseInt(Math.random() * 21);
-    y === Math.floor(this.config.getColsCount / 2) ? y++ : y;
+    y === Math.floor(snakeStep.y) ? y = (y + 10) % settings.rowsCount: y;
     this.setWallCoordinates(x, y);
     let dirCoord = this.isHoriz ? this.getLastWallCoordinate().y : this.getLastWallCoordinate().x;
     while (dirCoord < 20 && this.body.length < this.len) {
@@ -372,7 +372,7 @@ const game = {
     if (this.isOnFood()) {
       this.renderScore(this.addToScore());
       this.snake.growUp();
-      this.wall.generateWallBody(); 
+      this.wall.generateWallBody(this.snake.getNextStepHeadPoint()); 
       this.food.setCoordinates(this.getRandomFreeCoordinates());
       if (this.isGameWon()) this.finish();
     }
