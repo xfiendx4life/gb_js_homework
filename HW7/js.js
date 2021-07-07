@@ -239,6 +239,7 @@ const wall = {
     let x = parseInt(Math.random() * 21);
     x === Math.floor(this.config.getColsCount / 2) ? x++ : x;
     let y = parseInt(Math.random() * 21);
+    y === Math.floor(this.config.getColsCount / 2) ? y++ : y;
     this.setWallCoordinates(x, y);
     let dirCoord = this.isHoriz ? this.getLastWallCoordinate().y : this.getLastWallCoordinate().x;
     while (dirCoord < 20 && this.body.length < this.len) {
@@ -249,6 +250,12 @@ const wall = {
       }
     }
     this.len = this.body.length;
+  },
+
+  isOnPoint(point) {
+    return this.getBody().some((snakePoint) => {
+      return snakePoint.x === point.x && snakePoint.y === point.y;
+    });
   },
 
 }
@@ -398,7 +405,8 @@ const game = {
       nextHeadPoint.x < this.config.getColsCount() &&
       nextHeadPoint.y < this.config.getRowsCount() &&
       nextHeadPoint.x >= 0 &&
-      nextHeadPoint.y >= 0;
+      nextHeadPoint.y >= 0 &&
+      !this.wall.isOnPoint(nextHeadPoint);
   },
 
   isGameWon() {
