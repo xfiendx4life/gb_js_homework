@@ -1,0 +1,107 @@
+td {
+    border: 1px solid #000;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse
+}
+
+.board-head {
+    border: none;
+}
+
+.white {
+    background-color: #fff;
+}
+
+.black {
+    background-color: #000;
+}
+
+.cart {
+    background-color: grey;
+    border-radius: 5px;
+    height: 30px;
+    text-align: center;
+    margin-top: 20px;
+    height: 30%;
+    padding-bottom: 10px;
+}
+
+.cart p {
+    height: 100%;
+    padding: 5px;
+    margin: 0;
+}
+
+.item-card {
+    margin-top: 10px;
+    width: 220px;
+    display: inline-block;
+    border: 1px solid black;
+    margin-right: 10px;
+    padding-left: 2%;
+    border-radius: 5px;
+}
+
+catalog img {
+    width: 100%;
+}
+
+button {
+    border: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0px;
+    margin-bottom: 10px;
+}
+
+li {
+    list-style: none;
+}
+
+.modal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 10px;
+    top: 10px;
+    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.modal .product {
+    /* width: 50%; */
+    height: 70%;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+.arrow {
+    position: absolute;
+    height: 10%;
+    top: 30%;
+}
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 5%;
+}
+
+.wrapper {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.left {
+    left: 2%;
+}
+
+.right {
+    right: 2%;
+}
