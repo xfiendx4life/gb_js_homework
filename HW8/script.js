@@ -1,5 +1,20 @@
 'use strict';
 
+// Задание 1
+// Для д.р.7 замыкания точно можно использовать и они используются для добавления ивентЛистнеров и передачи им методов 
+// объектов
+
+// initEventHandlers() {
+//     document.getElementById('playButton').addEventListener('click', () => {
+//       this.playClickHandler();
+//     });
+//     document.getElementById('newGameButton').addEventListener('click', () => {
+//       this.newGameClickHandler();
+//     });
+//     document.addEventListener('keydown', (event) => {
+//       this.keyDownHandler(event);
+//     })
+//   },
 
 //Задание 2
 // undefined. Описание a поднимется, переменная будет, но не инициализированная
